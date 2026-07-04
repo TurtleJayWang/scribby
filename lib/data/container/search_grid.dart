@@ -5,7 +5,7 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/semantics.dart';
 import 'package:scribby/data/container/grid_pos.dart';
 import 'package:scribby/data/container/grid_rect.dart';
-import 'package:scribby/data/scribble/scribble_item.dart';
+import 'package:scribby/data/scribble/scribble_content.dart';
 
 /// This SearchGrid is design for fast searching of items in 
 /// a Scribble, users can search for items using Rect in global
@@ -27,7 +27,7 @@ import 'package:scribby/data/scribble/scribble_item.dart';
 /// final strokesInCamera = strokesSearchGrid.searchItemsInRect(camera.viewportRect);
 /// paint(strokesInCamera);
 /// ```
-class SearchGrid<T extends ScribbleItem> {
+class SearchGrid<T extends ScribbleContent> {
   final HashMap< GridPos, List<_GridItem<T>> > _gridPosToItemsMap = HashMap();
   final List<T> _itemsList;
   final double _gridSize;

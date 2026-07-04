@@ -3,12 +3,12 @@ import 'package:flutter/painting.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:scribby/data/container/grid_pos.dart';
 import 'package:scribby/data/container/search_grid.dart';
-import 'package:scribby/data/scribble/scribble_item.dart';
+import 'package:scribby/data/scribble/scribble_content.dart';
 
-class MockScribbleItem extends ScribbleItem {
+class MockScribbleContent extends ScribbleContent {
   final Rect _rect;
   
-  MockScribbleItem(this._rect);
+  MockScribbleContent(this._rect);
   
   @override
   Rect get rectInGlobalSpace => _rect;
@@ -21,12 +21,12 @@ void testGridPosFromGlobal() {
 }
 
 void testSearchIndicesByRect() {
-  List<MockScribbleItem> scribbleItems = [
-    MockScribbleItem(Rect.fromLTWH(100.0, 200.0, 150.0, 200.0)),
-    MockScribbleItem(Rect.fromLTWH(-150.0, 200.0, 300.0, 150.0)),
-    MockScribbleItem(Rect.fromLTWH(-200.0, -200.0, 180.0, 160.0)),
-    MockScribbleItem(Rect.fromLTWH(300.0, -100.0, 120.0, 100.0)),
-    MockScribbleItem(Rect.fromLTWH(100.0, 200.0, 500.0, 600.0)),
+  List<MockScribbleContent> scribbleItems = [
+    MockScribbleContent(Rect.fromLTWH(100.0, 200.0, 150.0, 200.0)),
+    MockScribbleContent(Rect.fromLTWH(-150.0, 200.0, 300.0, 150.0)),
+    MockScribbleContent(Rect.fromLTWH(-200.0, -200.0, 180.0, 160.0)),
+    MockScribbleContent(Rect.fromLTWH(300.0, -100.0, 120.0, 100.0)),
+    MockScribbleContent(Rect.fromLTWH(100.0, 200.0, 500.0, 600.0)),
   ];
 
   Rect mockViewport = Rect.fromLTWH(200, 200, 100, 100);
