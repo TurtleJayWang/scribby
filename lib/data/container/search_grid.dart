@@ -72,6 +72,7 @@ class SearchGrid<T extends ScribbleContent> {
     return indices.toList();
   }
 
+  /// The output items follow the order as they added to this SearchGrid
   List<T> searchItemsInRect(Rect rect) {
     final indicesOfItems = searchIndicesOfItemsInRect(rect);
     return indicesOfItems.map((i) => _itemsList[i]).toList();
