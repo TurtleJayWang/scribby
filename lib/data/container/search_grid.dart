@@ -29,23 +29,27 @@ import 'package:scribby/data/scribble/scribble_content.dart';
 /// ```
 class SearchGrid<T extends ScribbleContent> {
   final HashMap< GridPos, List<_GridItem<T>> > _gridPosToItemsMap = HashMap();
-  final List<T> _itemsList;
+  final List<T> _itemsList = [];
   final double _gridSize;
 
-  SearchGrid([this._itemsList = const [], this._gridSize = 10.0]) {
-    for (int i = 0; i < _itemsList.length; i++) {
-      _addItemToMapWithIndex(_itemsList[i], i);
-    }
+  SearchGrid._([this._gridSize = 10.0]);
+
+  static Future<SearchGrid<sT>> createSearchGrid<sT extends ScribbleContent>(
+    List<sT> items, { double gridSize = 10.0 }
+  ) async {
+    final grid = SearchGrid<sT>._(gridSize);
+    await grid.addAll(items);
+    return grid;
   }
 
-  void add(T item) async {
+  Future<void> add(T item) async {
     await _addItemToMapWithIndex(item, _itemsList.length);
     _addItemToList(item);
   }
 
-  void addAll(List<T> items) {
+  Future<void> addAll(List<T> items) async {
     for (final item in items) {
-      add(item);
+      await add(item);
     }
   }
 

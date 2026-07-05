@@ -11,7 +11,10 @@ class MockScribbleContent extends ScribbleContent {
   MockScribbleContent(this._rect);
   
   @override
-  Rect get rectInGlobalSpace => _rect;
+  Future<Rect> get rectInGlobalSpace async => _rect;
+
+  @override
+  Rect get rectInGlobalSpaceSync => _rect;
 }
 
 void testGridPosFromGlobal() {
@@ -20,7 +23,7 @@ void testGridPosFromGlobal() {
   expect(gridPos.y, -11);
 }
 
-void testSearchIndicesByRect() {
+Future<void> testSearchIndicesByRect() async {
   List<MockScribbleContent> scribbleItems = [
     MockScribbleContent(Rect.fromLTWH(100.0, 200.0, 150.0, 200.0)),
     MockScribbleContent(Rect.fromLTWH(-150.0, 200.0, 300.0, 150.0)),
@@ -31,7 +34,7 @@ void testSearchIndicesByRect() {
 
   Rect mockViewport = Rect.fromLTWH(200, 200, 100, 100);
 
-  final grid = SearchGrid(scribbleItems);
+  final grid = await SearchGrid.createSearchGrid(scribbleItems);
   final indices = grid.searchIndicesOfItemsInRect(mockViewport);
   expect(indices, [0, 4]);
 }
@@ -46,7 +49,7 @@ void main() {
 
     test(
       "Test SearchGrid().searchIndicesOfItemsInRect.\nIn this test, only the first and the fifth items are in the viewport.", 
-      () => testSearchIndicesByRect()
+      () async => await testSearchIndicesByRect()
     );
 
   }); 
