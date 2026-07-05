@@ -28,8 +28,8 @@ void main() {
 
   group("Test the basic functionalities of Stroke class", () {
 
-    test("Stroke.fromRawStrokePoints, stroke.rectInGlobalSpace test", () {
-      final rect = stroke.rectInGlobalSpace;
+    test("Stroke.fromRawStrokePoints, stroke.rectInGlobalSpace test", () async {
+      final rect = await stroke.rectInGlobalSpace;
       expect(rect.left, -1.45);
       expect(rect.top, -2.05);
       expect(rect.right, 5.25);
