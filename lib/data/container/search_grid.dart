@@ -38,8 +38,8 @@ class SearchGrid<T extends ScribbleContent> {
     }
   }
 
-  void add(T item) {
-    _addItemToMapWithIndex(item, _itemsList.length);
+  void add(T item) async {
+    await _addItemToMapWithIndex(item, _itemsList.length);
     _addItemToList(item);
   }
 
@@ -61,7 +61,7 @@ class SearchGrid<T extends ScribbleContent> {
 
     for (final pos in gridPositions) {
       indices.addAll(
-        indicesOfItemsInGridPos(pos).where((i) => _itemsList[i].rectInGlobalSpace.overlaps(rect))
+        indicesOfItemsInGridPos(pos).where((i) => _itemsList[i].rectInGlobalSpaceSync.overlaps(rect))
       );
     }
 
@@ -86,8 +86,8 @@ class SearchGrid<T extends ScribbleContent> {
     return indicesOfItems.map((i) => _itemsList[i]).toList();    
   }
 
-  void _addItemToMapWithIndex(T item, int index) {
-    final gridRect = GridRect.fromRectAndGridSize(item.rectInGlobalSpace, _gridSize);
+  Future<void> _addItemToMapWithIndex(T item, int index) async {
+    final gridRect = GridRect.fromRectAndGridSize(await item.rectInGlobalSpace, _gridSize);
     final gridPositions = gridRect.getGridPositionsInRect();
     
     for (final pos in gridPositions) {

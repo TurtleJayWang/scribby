@@ -35,7 +35,31 @@ class Stroke extends ScribbleContent {
   List<StrokePoint> get strokePoints => _strokePoints;
 
   @override
-  Rect get rectInGlobalSpace {
+  Future<Rect> get rectInGlobalSpace async {
+    if (_rectInGlobalSpace == null) {
+      final firstPointPos = _strokePoints.first.position;
+      final firstPointRadius = _strokePoints.first.width / 2;
+      double left = firstPointPos.dx - firstPointRadius, right = firstPointPos.dx + firstPointRadius;
+      double top = firstPointPos.dy - firstPointRadius, bottom = firstPointPos.dy + firstPointRadius;
+      
+      await for (final strokePoint in Stream.fromIterable(_strokePoints.skip(1))) {
+        final strokePointPos = strokePoint.position;
+        final strokePointRadius = strokePoint.width / 2;
+        
+        left = min(strokePointPos.dx - strokePointRadius, left);
+        right = max(strokePointPos.dx + strokePointRadius, right);
+        top = min(strokePointPos.dy - strokePointRadius, top);
+        bottom = max(strokePointPos.dy + strokePointRadius, bottom);
+      }
+
+      _rectInGlobalSpace = Rect.fromLTRB(left, top, right, bottom);
+    }
+
+    return _rectInGlobalSpace!;
+  }
+
+  @override
+  Rect get rectInGlobalSpaceSync {
     if (_rectInGlobalSpace == null) {
       final firstPointPos = _strokePoints.first.position;
       final firstPointRadius = _strokePoints.first.width / 2;
